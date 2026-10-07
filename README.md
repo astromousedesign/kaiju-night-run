@@ -7,8 +7,6 @@ every pixel drawn from code. Original homage characters only.
 - **Store-only:** runs only when framed by `gojiragames.crystalcommerce.com` (or localhost).
   Opened directly, it shows a "Now playing at Gojira Games" card. This is a soft lock, not
   security. Locally, `?dev` lets you play it unframed.
-- **Coupon:** reaching 1,000 points reveals `COUPON_CODE` (top of `game.js`). Create the matching
-  discount in the store admin.
 
 ## Embed
 

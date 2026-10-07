@@ -4,8 +4,6 @@
   "use strict";
 
   // ---------- config ----------
-  const COUPON_CODE = "CREATURE10";
-  const COUPON_SCORE = 1000;
   const ALLOWED_HOSTS = ["gojiragames.crystalcommerce.com", "localhost", "127.0.0.1"];
   const HI_KEY = "knr.hi";
 
@@ -297,7 +295,6 @@
     jump: () => beep([330, 494], 0.05),
     pack: () => beep([659, 784, 988, 1319], 0.05),
     die: () => beep([392, 311, 233, 156], 0.12, "sawtooth", 0.06),
-    coupon: () => beep([523, 659, 784, 1047, 784, 1047], 0.09),
   };
 
   // ---------- hi score ----------
@@ -346,8 +343,6 @@
     scroll: 0,
     entities: [],
     nextSpawn: 90,
-    couponShown: false,
-    couponTimer: 0,
     overAt: 0,
     deadFrames: 0,
   };
@@ -363,8 +358,6 @@
     state.scroll = 0;
     state.entities = [];
     state.nextSpawn = 90;
-    state.couponShown = false;
-    state.couponTimer = 0;
     state.deadFrames = 0;
     Object.assign(player, { y: 0, vy: 0, ducking: false, onGround: true, dead: false });
   }
@@ -487,13 +480,7 @@
     state.scroll += state.speed * dt;
     if (state.mode === "play") {
       state.score += state.speed * dt * 0.17;
-      if (!state.couponShown && state.score >= COUPON_SCORE) {
-        state.couponShown = true;
-        state.couponTimer = 240;
-        sfx.coupon();
-      }
     }
-    if (state.couponTimer > 0) state.couponTimer -= dt;
 
     // player physics: hold jump for height, duck in air to drop fast
     const gravity = input.jumpHeld && player.vy < 0 ? 0.17 : 0.27;
@@ -759,17 +746,6 @@
       ]);
     }
 
-    if (state.couponTimer > 0) {
-      const flash = Math.floor(state.couponTimer / 8) % 2;
-      ctx.fillStyle = C.k;
-      ctx.fillRect(SCREEN.w / 2 - 92, 22, 184, 26);
-      ctx.fillStyle = flash ? C.y : C.w;
-      ctx.fillRect(SCREEN.w / 2 - 91, 23, 182, 1);
-      ctx.fillRect(SCREEN.w / 2 - 91, 46, 182, 1);
-      drawText("YOU SURVIVED THE LAGOON!", SCREEN.w / 2, 27, C.w, 1, "center");
-      drawText(`CODE: ${COUPON_CODE}`, SCREEN.w / 2, 36, C.y, 1, "center");
-    }
-
     if (state.mode === "paused") {
       titleCard(["INTERMISSION"], 2, [["PRESS P OR SPACE TO RESUME", C.y]]);
     }
@@ -778,7 +754,6 @@
       const lines = [
         [`SCORE ${pad(state.score)}   HI ${pad(state.hi)}`, C.w],
       ];
-      if (state.couponShown) lines.push([`YOUR CODE: ${COUPON_CODE}`, C.y]);
       lines.push([state.deadFrames > 25 && Math.floor(state.t / 30) % 2 ? "PRESS SPACE TO RE-ENTER THE LAGOON" : "", C.g]);
       titleCard(["THE END?"], 3, lines);
     }
