@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Kaiju Night Run</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage">
+    <canvas id="game" width="384" height="216" aria-label="Kaiju Night Run, a one-button runner game. Press space or tap to jump, down arrow to duck."></canvas>
+    <div class="fx" aria-hidden="true"></div>
+    <button id="duck" class="touch-btn" type="button" aria-label="Duck">DUCK</button>
+    <button id="sound" class="touch-btn sound" type="button" aria-label="Toggle sound">SOUND OFF</button>
+  </main>
+
+  <section id="gate" class="gate" hidden>
+    <p class="gate-kicker">Now playing</p>
+    <h1>Kaiju Night Run</h1>
+    <p class="gate-sub">Exclusively at the Gojira Games drive-in.</p>
+    <a class="gate-cta" href="https://gojiragames.crystalcommerce.com/" target="_top">Grab a spot</a>
+  </section>
+
+  <script src="game.js"></script>
+</body>
+</html>

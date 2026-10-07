@@ -1,0 +1,119 @@
+:root {
+  --ink: #000;
+  --smoke: #3a3a3a;
+  --ash: #8a8a8a;
+  --bone: #d8d8d8;
+  --marquee: #ffd21f;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: ui-monospace, "Courier New", monospace;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+canvas {
+  display: block;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  cursor: pointer;
+  outline: none;
+}
+
+/* CRT scanlines + vignette over the whole cabinet */
+.fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.touch-btn {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  font: 700 12px/1 ui-monospace, "Courier New", monospace;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  background: var(--marquee);
+  border: 2px solid var(--ink);
+  box-shadow: 0 0 0 2px var(--marquee);
+  padding: 12px 18px;
+  border-radius: 3px;
+}
+
+#duck { right: 12px; }
+.sound { left: 12px; background: var(--bone); box-shadow: 0 0 0 2px var(--bone); }
+
+@media (pointer: coarse) {
+  .touch-btn { display: block; }
+}
+
+/* Shown when the game is opened outside the Gojira Games store */
+.gate {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 24px;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px),
+    var(--ink);
+}
+
+.gate[hidden] { display: none; }
+
+.gate h1 {
+  margin: 0;
+  font-size: clamp(32px, 8vw, 72px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.gate-kicker {
+  margin: 0;
+  color: var(--marquee);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.gate-sub { margin: 0; color: var(--ash); }
+
+.gate-cta {
+  justify-self: center;
+  margin-top: 12px;
+  padding: 12px 22px;
+  color: var(--ink);
+  background: var(--marquee);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+.stage[hidden] { display: none; }
